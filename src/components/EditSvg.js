@@ -14,6 +14,7 @@ const EditSvg = () => {
   const [download, setDownload] = useState('')
 
   const svgRef = useRef(null)
+  const saveRef = useRef(null)
 
   function updateInput({ target }) {
     const tmpFields = { ...fields }
@@ -44,7 +45,11 @@ const EditSvg = () => {
         },
       })
       .then(({ data }) => {
-        setDownload(<a href="/static/1.pdf">Скачать</a>)
+        setDownload(
+          <a href="/static/1.pdf" ref={saveRef} download="vizitka.pdf">
+            Скачать
+          </a>
+        )
       })
       .catch((error) => {
         console.error(error)
@@ -69,6 +74,10 @@ const EditSvg = () => {
     updateSvg()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fields])
+  useEffect(() => {
+    if (download) saveRef.current.click()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [download])
 
   const makeSvgSrc = (svg) => {
     return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg)
