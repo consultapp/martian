@@ -18,6 +18,12 @@ const EditSvg = ({ svg, startFields, handleRefresh }) => {
   }
 
   async function makePdfFile(id) {
+    setDownload(
+      <div className="spinner-border text-primary m-2" role="status">
+        &nbsp;
+      </div>
+    )
+
     axios
       .post(API_URL_PDF, renderFieldsToSvg(svg[id], fields), {
         headers: {
@@ -102,8 +108,6 @@ const EditSvg = ({ svg, startFields, handleRefresh }) => {
       {download}
     </div>
   )
-
-  console.log(fieldsHTML)
 
   return (
     <>

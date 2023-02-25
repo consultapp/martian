@@ -89,6 +89,18 @@ export default function LoadSvgFiles({ handleFilesLoaded }) {
     setState({ ...state, svg: newSvg })
   }
 
+  const buttons = state.svg[0] ? (
+    <div className="load-form-buttons">
+      <button className="btn btn-primary m-3" onClick={editHandle}>
+        Редактировать визитки
+      </button>
+      <button className="btn btn-primary m-3" onClick={changeHandle}>
+        Поменять местами
+      </button>
+    </div>
+  ) : (
+    ''
+  )
   return (
     <>
       <div className="row">
@@ -130,16 +142,7 @@ export default function LoadSvgFiles({ handleFilesLoaded }) {
               </div>
             </div>
           </div>
-          <div className="row">
-            <div className="load-form-buttons">
-              <button className="btn btn-primary m-3" onClick={editHandle}>
-                Редактировать визитки
-              </button>
-              <button className="btn btn-primary m-3" onClick={changeHandle}>
-                Поменять местами
-              </button>
-            </div>
-          </div>
+          <div className="row">{buttons}</div>
         </form>
       </div>
     </>
