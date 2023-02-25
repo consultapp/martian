@@ -1,45 +1,28 @@
 import React, { useEffect, useRef, useState } from 'react'
 import mySvg from '/static/1.svg'
 import axios from 'axios'
+import RenderSvg from './RenderSvg'
 
-const FIELDS = {
-  name: 'FIELD_NAME',
-  surname: 'FIELD_SURNAME',
-}
+const API_URL_PDF = '/api/getPdf'
 
-const EditSvg = () => {
-  const [baseSvg, setBaseSvg] = useState()
+const EditSvg = ({ svgs }) => {
   const [svg, setSvg] = useState()
-  const [fields, setFields] = useState(FIELDS)
+
+  const [fields, setFields] = useState(null)
+
   const [download, setDownload] = useState('')
 
-  const svgRef = useRef(null)
   const saveRef = useRef(null)
 
-  function updateInput({ target }) {
+  function updateFields({ target }) {
     const tmpFields = { ...fields }
     tmpFields[target.name] = target.value
     setFields(tmpFields)
   }
 
-  function updateSvg() {
-    if (baseSvg) {
-      setSvg(
-        Object.entries(fields).reduce((accum, [key, value]) => {
-          return accum.replace(`FIELD_${key.toUpperCase()}`, value)
-        }, baseSvg)
-      )
-    }
-  }
-
-  const loadSvg = async ({ src }) => {
-    const response = await fetch(src)
-    setBaseSvg(await response.text())
-  }
-
   async function makePdfFile() {
     axios
-      .post('/api/image', svg, {
+      .post(API_URL_PDF, svg, {
         headers: {
           'Content-Type': 'image/svg+xml',
         },
@@ -56,22 +39,16 @@ const EditSvg = () => {
       })
   }
 
+  function getFieldsFromSvg() {}
+
   useEffect(() => {
     console.log('loadSvg : useEffect')
-    console.dir(mySvg)
-    loadSvg(mySvg)
+    getFieldsFromSvg()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
-    console.log('baseSvg : useEffect')
-    updateSvg()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [baseSvg])
-
-  useEffect(() => {
     console.log('loadSvg : useEffect')
-    updateSvg()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fields])
   useEffect(() => {
@@ -79,45 +56,59 @@ const EditSvg = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [download])
 
-  const makeSvgSrc = (svg) => {
-    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg)
-  }
+  const svgRenders = svgs.map((item, i) => {
+    return item ? (
+      <div className="col">
+        <RenderSvg svg={item} fields={fields} alt={`Svg${i}`} />
+      </div>
+    ) : (
+      <div className="col">Нет второго шаблона</div>
+    )
+  })
 
   return (
-    <div className="container">
-      <div>
-        {svg ? (
-          <img
-            src={makeSvgSrc(svg)}
-            ref={svgRef}
-            width="500"
-            // height="150"
-            alt="vizitka svg"
+    <>
+      <div className="row">
+        <h1>Редактирование шаблонов</h1>
+      </div>
+      <div className="row">{svgRenders}</div>
+      <div className="row">
+        <div>
+          <label>Name: </label>
+          <input value={fields?.name} name="name" onChange={updateFields} />
+        </div>
+        <div>
+          <label>Surname: </label>
+          <input
+            value={fields?.surname}
+            name="surname"
+            onChange={updateFields}
           />
-        ) : (
-          <div className="placeholder">Загрузка</div>
-        )}
+        </div>
       </div>
-      <div>
-        <label>Name: </label>
-        <input value={fields?.name} name="name" onChange={updateInput} />
-      </div>
-      <div>
-        <label>Surname: </label>
-        <input value={fields?.surname} name="surname" onChange={updateInput} />
-      </div>
-      <div>
-        <button
-          onClick={() => {
-            makePdfFile()
-          }}
-        >
-          Make PDF
-        </button>
+      <div className="row">
+        <div className="edit-form-buttons">
+          <button
+            className="btn btn-secondary outline m-2"
+            onClick={() => {
+              makePdfFile()
+            }}
+          >
+            &lt; Выбрать шаблоны
+          </button>
+          <button
+            className="btn btn-primary m-2"
+            onClick={() => {
+              makePdfFile()
+            }}
+          >
+            Make PDF
+          </button>
 
-        <div>{download}</div>
+          <div>{download}</div>
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 
