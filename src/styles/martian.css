@@ -5,8 +5,8 @@
 
 .main {
   background: var(--bs-gray-200);
-  margin-top: 150px;
-  min-height: 400px;
+  margin-top: 50px;
+  min-height: 350px;
   border-radius: var(--bs-border-radius-sm);
 }
 
