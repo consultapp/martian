@@ -1,36 +1,63 @@
+import patternField from '@/patternField'
 import React, { useEffect, useRef, useState } from 'react'
 import RenderSvg from './RenderSvg'
 
 export default function LoadSvgFiles({ handleFilesLoaded }) {
   const [svg, setSvg] = useState([null, null])
+  const [fields, setFields] = useState([])
 
   const handleFileChange = (event) => {
-    if (event.target.files) {
-      console.log(event.target)
+    const { target } = event
+    if (target.files) {
+      console.log(target)
 
       let reader = new FileReader()
-
-      reader.readAsText(event.target.files[0])
+      reader.readAsText(target.files[0])
 
       reader.onload = function () {
-        console.log(reader.result)
+        // console.log(reader.result)
         const svgArr = [...svg]
-        svgArr[event.target.id.at(-1)] = reader.result
-        setSvg(svgArr)
+        svgArr[target.id.at(-1)] = reader.result
+
+        const fieldsArr = getFieldsFromSvg(reader.result)
+        if (fieldsArr) {
+          setSvg(svgArr)
+          setFields(unicFields([...fields, ...fieldsArr]))
+        } else {
+          alert('Ошибка. Поля для редактирования не найдены.')
+          target.value = ''
+        }
       }
 
       reader.onerror = function () {
         console.log(reader.error)
+        alert('Ошибка. Файл загружен с ошибкой.')
+        target.value = ''
       }
     }
+  }
+
+  function getFieldsFromSvg(str) {
+    const regexp = new RegExp(patternField('\\w+'), 'gmi')
+    return unicFields(str.match(regexp))
+  }
+
+  function unicFields(arr) {
+    if (arr)
+      return arr.reduce((accum, item) => {
+        if (!accum.includes(item)) accum.push(item)
+        return accum
+      }, [])
   }
 
   const editHandle = (event) => {
     event.preventDefault()
     if (svg[0]) {
-      handleFilesLoaded(svg)
+      handleFilesLoaded(svg, fields)
     }
   }
+
+  console.log('LoadSvgFiles', fields)
 
   return (
     <>
@@ -46,6 +73,7 @@ export default function LoadSvgFiles({ handleFilesLoaded }) {
               </label>
               <input
                 type="file"
+                accept=".svg"
                 className="form-control"
                 id="inputFile0"
                 onChange={handleFileChange}
@@ -60,6 +88,7 @@ export default function LoadSvgFiles({ handleFilesLoaded }) {
               </label>
               <input
                 type="file"
+                accept=".svg"
                 className="form-control"
                 id="inputFile1"
                 onChange={handleFileChange}
