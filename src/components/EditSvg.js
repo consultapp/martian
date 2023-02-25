@@ -1,15 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
-import mySvg from '/static/1.svg'
 import axios from 'axios'
 import RenderSvg from './RenderSvg'
+import renderFieldsToSvg from '@/utils/renderFieldsToSvg'
 
 const API_URL_PDF = '/api/getPdf'
 
-const EditSvg = ({ svgs }) => {
-  const [svg, setSvg] = useState()
-
-  const [fields, setFields] = useState(null)
-
+const EditSvg = ({ svg, startFields, handleRefresh }) => {
+  const [fields, setFields] = useState(startFields)
   const [download, setDownload] = useState('')
 
   const saveRef = useRef(null)
@@ -20,16 +17,22 @@ const EditSvg = ({ svgs }) => {
     setFields(tmpFields)
   }
 
-  async function makePdfFile() {
+  async function makePdfFile(id) {
     axios
-      .post(API_URL_PDF, svg, {
+      .post(API_URL_PDF, renderFieldsToSvg(svg[id], fields), {
         headers: {
           'Content-Type': 'image/svg+xml',
         },
       })
       .then(({ data }) => {
         setDownload(
-          <a href="/static/1.pdf" ref={saveRef} download="vizitka.pdf">
+          <a
+            href="/static/1.pdf"
+            className="btn btn-primary"
+            ref={saveRef}
+            download="vizitka.pdf"
+            key={data}
+          >
             Скачать
           </a>
         )
@@ -39,26 +42,14 @@ const EditSvg = ({ svgs }) => {
       })
   }
 
-  function getFieldsFromSvg() {}
+  // useEffect(() => {
+  //   if (download) saveRef.current.click()
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [download])
 
-  useEffect(() => {
-    console.log('loadSvg : useEffect')
-    getFieldsFromSvg()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  useEffect(() => {
-    console.log('loadSvg : useEffect')
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fields])
-  useEffect(() => {
-    if (download) saveRef.current.click()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [download])
-
-  const svgRenders = svgs.map((item, i) => {
+  const svgRenders = svg.map((item, i) => {
     return item ? (
-      <div className="col">
+      <div className="col" key={i}>
         <RenderSvg svg={item} fields={fields} alt={`Svg${i}`} />
       </div>
     ) : (
@@ -66,48 +57,64 @@ const EditSvg = ({ svgs }) => {
     )
   })
 
+  const fieldsHTML = fields
+    ? Object.entries(fields).map(([key, value]) => {
+        return getFieldHTML(key, value)
+      })
+    : ''
+
+  function getFieldHTML(key, value) {
+    return (
+      <div key={key}>
+        <label className="form-lable">{key}: </label>
+        <input
+          className="form-control"
+          value={value}
+          name={key}
+          id={key}
+          onChange={updateFields}
+        />
+      </div>
+    )
+  }
+
+  const buttons = (
+    <div className="edit-form-buttons">
+      <button
+        className="btn btn-secondary outline m-2"
+        onClick={(event) => {
+          event.preventDefault()
+          handleRefresh()
+        }}
+      >
+        &lt; Выбрать шаблоны
+      </button>
+      <button
+        className="btn btn-primary m-2"
+        onClick={(event) => {
+          event.preventDefault()
+          makePdfFile(0)
+        }}
+      >
+        Make PDF
+      </button>
+
+      {download}
+    </div>
+  )
+
+  console.log(fieldsHTML)
+
   return (
     <>
       <div className="row">
         <h1>Редактирование шаблонов</h1>
       </div>
       <div className="row">{svgRenders}</div>
-      <div className="row">
-        <div>
-          <label>Name: </label>
-          <input value={fields?.name} name="name" onChange={updateFields} />
-        </div>
-        <div>
-          <label>Surname: </label>
-          <input
-            value={fields?.surname}
-            name="surname"
-            onChange={updateFields}
-          />
-        </div>
-      </div>
-      <div className="row">
-        <div className="edit-form-buttons">
-          <button
-            className="btn btn-secondary outline m-2"
-            onClick={() => {
-              makePdfFile()
-            }}
-          >
-            &lt; Выбрать шаблоны
-          </button>
-          <button
-            className="btn btn-primary m-2"
-            onClick={() => {
-              makePdfFile()
-            }}
-          >
-            Make PDF
-          </button>
-
-          <div>{download}</div>
-        </div>
-      </div>
+      <form>
+        <div className="row">{fieldsHTML}</div>
+        <div className="row">{buttons}</div>
+      </form>
     </>
   )
 }

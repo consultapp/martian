@@ -5,7 +5,7 @@
 
 .main {
   background: var(--bs-gray-200);
-  margin-top: 300px;
+  margin-top: 150px;
   min-height: 400px;
   border-radius: var(--bs-border-radius-sm);
 }
@@ -28,4 +28,9 @@ h1 {
 }
 .load-files-render {
   padding: 5px;
+}
+
+.place-hold {
+  width: 100%;
+  min-height: 300px;
 }
