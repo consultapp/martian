@@ -1,7 +1,8 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { create } from 'html-pdf'
 export default function handler(req, res) {
-  createOrderPdf(req.body, res)
+  const { side = 'front' } = req.query
+  createOrderPdf(req.body, res, side)
 }
 const options = {
   width: '266.46px', // allowed units: mm, cm, in, px
@@ -12,7 +13,9 @@ const options = {
   orientation: 'landscape',
 }
 
-function createOrderPdf(svg, result) {
+function createOrderPdf(svg, result, side) {
+  const id = new Date().getTime()
+  const resultName = `./static/${id}_${side}.pdf`
   try {
     create(
       `<html>
@@ -21,9 +24,9 @@ function createOrderPdf(svg, result) {
         </body>
       </html>`,
       options
-    ).toFile('./static/1.pdf', function (err, res) {
+    ).toFile(resultName, function (err, res) {
       if (err) return console.log(`>>>Error of pdf .toFile: ${err}`)
-      result.status(200).json({ pdf: '/static/1.pdf' })
+      result.status(200).json({ resultName: resultName })
     })
   } catch (err) {
     console.log(`createOrderPdf: try ${err}`)

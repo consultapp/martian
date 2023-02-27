@@ -16,17 +16,18 @@ function Martian() {
   }
 
   const steps = [
-    <LoadSvgFiles handleFilesLoaded={handleFilesLoaded} />,
+    <LoadSvgFiles handleFilesLoaded={handleFilesLoaded} key="LoadSvgFiles" />,
     <EditSvg
       svg={state.svg}
       startFields={state.fields}
       handleRefresh={handleRefresh}
+      key="EditSvg"
     />,
   ]
 
   const content = state.svg[0] ? steps[1] : steps[0]
 
-  return <main className="container-xl main">{content}</main>
+  return <main className="container-sm main">{content}</main>
 }
 
 export default Martian

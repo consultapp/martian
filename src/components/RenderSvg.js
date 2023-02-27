@@ -14,7 +14,7 @@ export default function RenderSvg({ svg, fields, alt = 'vizitka svg' }) {
   const render = renderFieldsToSvg(svg, fields)
 
   return (
-    <div className="svg_render">
+    <div className="svg_render" key={Date.now()}>
       {render ? (
         <img
           src={makeSvgSrc(render)}
