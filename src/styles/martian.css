@@ -5,13 +5,14 @@
 
 .main {
   background: var(--bs-gray-200);
-  margin-top: 50px;
-  min-height: 350px;
+  margin-top: 20px;
+  min-height: 200px;
   border-radius: var(--bs-border-radius-sm);
 }
 
 h1 {
   padding: 15px;
+  font-size: 25px;
 }
 
 .load-form {
