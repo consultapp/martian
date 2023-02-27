@@ -145,14 +145,6 @@ export default function LoadSvgFiles({ handleFilesLoaded }) {
           <div className="row">{buttons}</div>
         </form>
       </div>
-      <div className="row">
-        <a href="/static/v2_front.svg" download="v2_front.svg">
-          Фронт шаблон
-        </a>
-        <a href="/static/v2_rev.svg" download="v2_rev.svg">
-          Обратн. шаблон
-        </a>
-      </div>
     </>
   )
 }
