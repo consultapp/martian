@@ -12,12 +12,6 @@ const EditSvg = ({ svg, startFields, handleRefresh }) => {
   const [download, setDownload] = useState(['', ''])
   const [isLoading, setLoading] = useState(false)
 
-  function updateFields({ target }) {
-    const tmpFields = { ...fields }
-    tmpFields[target.name] = target.value
-    setFields(tmpFields)
-  }
-
   async function makePdfFile() {
     const side = ['front', 'reverse']
     const arr = download
@@ -95,30 +89,3 @@ const EditSvg = ({ svg, startFields, handleRefresh }) => {
 }
 
 export default EditSvg
-
-// axios
-// .post(`${API_URL_PDF}${side[id]}`, renderFieldsToSvg(svg[id], fields), {
-//   headers: {
-//     'Content-Type': 'image/svg+xml',
-//   },
-// })
-// .then(({ data }) => {
-//   const { resultName } = data
-//   const arr = download
-//   arr[id] = (
-//     <a
-//       href={resultName}
-//       className="btn btn-primary m-2"
-//       ref={saveRef}
-//       download={`vizitka_${side[id]}.pdf`}
-//       key={resultName}
-//     >
-//       Скачать {side[id]}
-//     </a>
-//   )
-//   setDownload(arr)
-//   setLoading(false)
-// })
-// .catch((error) => {
-//   console.error(error)
-// })

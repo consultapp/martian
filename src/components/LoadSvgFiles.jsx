@@ -3,6 +3,19 @@ import patternField from '@/utils/patternField'
 import React, { useRef, useState } from 'react'
 import RenderSvg from './RenderSvg'
 
+function unicFields(arr) {
+  if (arr)
+    return arr.reduce((accum, item) => {
+      if (!accum.includes(item)) accum.push(item)
+      return accum
+    }, [])
+}
+
+const getFieldsFromSvg = (str) => {
+  const regexp = new RegExp(patternField('\\w+'), 'gmi')
+  return unicFields(str.match(regexp))
+}
+
 export default function LoadSvgFiles({ handleFilesLoaded }) {
   const [state, setState] = useState({ svg: [null, null], fields: {} })
 
@@ -48,20 +61,6 @@ export default function LoadSvgFiles({ handleFilesLoaded }) {
       }
     }
   }
-
-  function getFieldsFromSvg(str) {
-    const regexp = new RegExp(patternField('\\w+'), 'gmi')
-    return unicFields(str.match(regexp))
-  }
-
-  function unicFields(arr) {
-    if (arr)
-      return arr.reduce((accum, item) => {
-        if (!accum.includes(item)) accum.push(item)
-        return accum
-      }, [])
-  }
-
   function getFields(fieldsArr) {
     const filterMock = mockFields.filter((item) => {
       return fieldsArr.includes(patternField(item.tag))
