@@ -15,21 +15,21 @@ function Martian() {
     setState(startState)
   }
 
-  const steps = [
-    <LoadSvgFiles handleFilesLoaded={handleFilesLoaded} key="LoadSvgFiles" />,
-    <EditSvg
-      svg={state.svg}
-      startFields={state.fields}
-      handleRefresh={handleRefresh}
-      key="EditSvg"
-    />,
-  ]
+  const steps = [,]
 
   const content = state.svg[0] ? steps[1] : steps[0]
 
   return (
     <div className="container-sm main">
-      {content}
+      {!state.svg[0] ? (
+        <LoadSvgFiles handleFilesLoaded={handleFilesLoaded} />
+      ) : (
+        <EditSvg
+          svg={state.svg}
+          startFields={state.fields}
+          handleRefresh={handleRefresh}
+        />
+      )}
       <div className="row">
         <p>
           <a href="/static/v2_front.svg" download="v2_front.svg">
