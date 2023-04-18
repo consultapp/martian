@@ -1,21 +1,21 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { create } from 'html-pdf'
+import { create } from "html-pdf";
 export default function handler(req, res) {
-  const { side = 'front' } = req.query
-  createOrderPdf(req.body, res, side)
+  const { side = "front" } = req.query;
+  createOrderPdf(req.body, res, side);
 }
 const options = {
-  width: '266.46px', // allowed units: mm, cm, in, px
-  height: '153.07px',
-  border: '0',
+  width: "266.46px", // allowed units: mm, cm, in, px
+  height: "153.07px",
+  border: "0",
   timeout: 10000,
-  type: 'pdf',
-  orientation: 'landscape',
-}
+  type: "pdf",
+  orientation: "landscape",
+};
 
 function createOrderPdf(svg, result, side) {
-  const id = new Date().getTime()
-  const resultName = `./static/${id}_${side}.pdf`
+  const id = new Date().getTime();
+  const resultName = `./static/${id}_${side}.pdf`;
   try {
     create(
       `<html>
@@ -25,13 +25,13 @@ function createOrderPdf(svg, result, side) {
       </html>`,
       options
     ).toFile(resultName, function (err, res) {
-      if (err) return console.log(`>>>Error of pdf .toFile: ${err}`)
-      result.status(200).json({ resultName: resultName })
-    })
+      if (err) return console.log(`>>>Error of pdf .toFile: ${err}`);
+      result.status(200).json({ resultName: resultName });
+    });
   } catch (err) {
-    console.log(`createOrderPdf: try ${err}`)
+    console.log(`createOrderPdf: try ${err}`);
   }
 }
 function dataSvg(svg) {
-  return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg)
+  return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
 }
