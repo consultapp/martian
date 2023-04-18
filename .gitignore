@@ -34,4 +34,4 @@ yarn-error.log*
 package-lock.json
 
 #static
-public/pdf
+public/static/pdf

@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { create } from "html-pdf";
 
-const PDF_API_PATH = "./public/pdf/";
+const PDF_API_PATH = "./public/static/pdf/";
 
 export default function handler(req, res) {
   const { side = "front" } = req.query;
