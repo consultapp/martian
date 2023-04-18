@@ -1,4 +1,6 @@
-import Fields from '../Fields/Fields'
+import { SIDE } from "@/const";
+import { DownloadButton } from "../DownloadButton/DownloadButton";
+import Fields from "../Fields/Fields";
 
 export default function Form({
   fields,
@@ -6,11 +8,12 @@ export default function Form({
   handleMakePdf,
   download,
   isLoading,
+  handleRefresh,
 }) {
   function updateFields({ target }) {
-    const tmpFields = { ...fields }
-    tmpFields[target.name] = target.value
-    setFields(tmpFields)
+    const tmpFields = { ...fields };
+    tmpFields[target.name] = target.value;
+    setFields(tmpFields);
   }
 
   return (
@@ -21,8 +24,8 @@ export default function Form({
           <button
             className="btn btn-secondary outline m-2"
             onClick={(event) => {
-              event.preventDefault()
-              handleRefresh()
+              event.preventDefault();
+              handleRefresh();
             }}
           >
             &lt; Выбрать шаблоны
@@ -31,7 +34,10 @@ export default function Form({
             Make PDF
           </button>
 
-          {download}
+          {download.map(
+            (item, i) =>
+              item && <DownloadButton resultName={item} side={SIDE[i]} />
+          )}
           {isLoading && (
             <div className="spinner-border text-primary m-2" role="status">
               &nbsp;
@@ -40,5 +46,5 @@ export default function Form({
         </div>
       </div>
     </form>
-  )
+  );
 }

@@ -1,66 +1,54 @@
-import React, { useEffect, useRef, useState } from 'react'
-import axios from 'axios'
-import RenderSvg from './RenderSvg'
-import renderFieldsToSvg from '@/utils/renderFieldsToSvg'
-import Fields from './Fields/Fields'
-import Form from './Form.jsx/Form'
+import React, { useEffect, useRef, useState } from "react";
+import axios from "axios";
+import RenderSvg from "./RenderSvg";
+import renderFieldsToSvg from "@/utils/renderFieldsToSvg";
+import Form from "./Form.jsx/Form";
+import { API_URL_PDF, SIDE } from "@/const";
 
-const API_URL_PDF = '/api/getPdf/'
+const initialDownload = ["", ""];
 
 const EditSvg = ({ svg, startFields, handleRefresh }) => {
-  const [fields, setFields] = useState(startFields)
-  const [download, setDownload] = useState(['', ''])
-  const [isLoading, setLoading] = useState(false)
+  const [fields, setFields] = useState(startFields);
+  const [download, setDownload] = useState(initialDownload);
+  const [isLoading, setLoading] = useState(false);
 
   async function makePdfFile() {
-    const side = ['front', 'reverse']
-    const arr = download
     try {
-      const promises = []
-      svg.forEach((item, i) => [
-        promises.push(
-          axios.post(
-            `${API_URL_PDF}${side[i]}`,
-            renderFieldsToSvg(item, fields),
-            {
-              headers: {
-                'Content-Type': 'image/svg+xml',
-              },
-            }
-          )
-        ),
-      ])
-      const result = await Promise.all(promises)
+      const promises = [];
 
-      result.forEach(({ data }, i) => {
-        const { resultName } = data
-        arr[i] = (
-          <a
-            href={resultName}
-            className="btn btn-primary m-2"
-            download={`vizitka_${side[i]}.pdf`}
-            key={resultName}
-          >
-            Скачать {side[i]}
-          </a>
-        )
-      })
-      console.log(result)
+      console.log(svg);
+      svg.forEach(
+        (item, i) =>
+          item &&
+          promises.push(
+            axios.post(
+              `${API_URL_PDF}${SIDE[i]}`,
+              renderFieldsToSvg(item, fields),
+              {
+                headers: {
+                  "Content-Type": "image/svg+xml",
+                },
+              }
+            )
+          )
+      );
+
+      const result = await Promise.all(promises);
+      setDownload(result.map(({ data }, i) => data.resultName));
     } catch (event) {
-      console.error(`Axios: ${event.message}`)
+      console.error(`Axios: ${event.message}`);
     }
-    setLoading(false)
-    setDownload(arr)
+    setLoading(false);
   }
 
   function handleMakePdf(event) {
-    event.preventDefault()
-    setDownload(['', ''])
-    setLoading(true)
-    makePdfFile()
+    event.preventDefault();
+    setDownload(initialDownload);
+    setLoading(true);
+    makePdfFile();
   }
 
-  console.log(download)
+  console.log(download);
   return (
     <>
       <div className="row">
@@ -73,8 +61,10 @@ const EditSvg = ({ svg, startFields, handleRefresh }) => {
               <RenderSvg svg={item} fields={fields} alt={`Svg${i}`} />
             </div>
           ) : (
-            <div className="col">Нет второго шаблона</div>
-          )
+            <div className="col" key={i}>
+              Нет второго шаблона
+            </div>
+          );
         })}
       </div>
       <Form
@@ -83,9 +73,10 @@ const EditSvg = ({ svg, startFields, handleRefresh }) => {
         handleMakePdf={handleMakePdf}
         download={download}
         isLoading={isLoading}
+        handleRefresh={handleRefresh}
       />
     </>
-  )
-}
+  );
+};
 
-export default EditSvg
+export default EditSvg;
