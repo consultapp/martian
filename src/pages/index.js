@@ -1,5 +1,6 @@
-import Head from 'next/head'
-import Martian from '@/components/Martian'
+import Head from "next/head";
+import Martian from "@/components/Martian/Martian";
+import MartianContainer from "@/containers/Martian/Martian";
 
 export default function Home() {
   return (
@@ -11,7 +12,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Martian />
+      <MartianContainer />
     </>
-  )
+  );
 }

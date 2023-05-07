@@ -1,27 +1,11 @@
-import React, { useState } from 'react'
-import EditSvg from './EditSvg'
-import LoadSvgFiles from './LoadSvgFiles'
+import React from "react";
+import EditSvg from "../EditSvg";
+import LoadSvgFiles from "../LoadSvgFiles";
 
-const startState = { svg: [null, null], fields: {} }
-
-function Martian() {
-  const [state, setState] = useState(startState)
-
-  const handleFilesLoaded = (result) => {
-    setState(result)
-  }
-
-  const handleRefresh = () => {
-    setState(startState)
-  }
-
-  const steps = [,]
-
-  const content = state.svg[0] ? steps[1] : steps[0]
-
+function Martian({ state, handleFilesLoaded, handleRefresh }) {
   return (
     <div className="container-sm main">
-      {!state.svg[0] ? (
+      {!state?.svg[0] ? (
         <LoadSvgFiles handleFilesLoaded={handleFilesLoaded} />
       ) : (
         <EditSvg
@@ -45,7 +29,7 @@ function Martian() {
         <p>Например: __FIELD_NAME__, __FIELD_PHONE__ и тд</p>
       </div>
     </div>
-  )
+  );
 }
 
-export default Martian
+export default Martian;

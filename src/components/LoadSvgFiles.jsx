@@ -1,94 +1,94 @@
-import { mockFields } from '@/mockFields'
-import patternField from '@/utils/patternField'
-import React, { useRef, useState } from 'react'
-import RenderSvg from './RenderSvg'
+import patternField from "@/utils/patternField";
+import React, { useRef, useState } from "react";
+import RenderSvg from "./RenderSvg";
+import { mockFields } from "@/constants/mockFields";
 
 function unicFields(arr) {
   if (arr)
     return arr.reduce((accum, item) => {
-      if (!accum.includes(item)) accum.push(item)
-      return accum
-    }, [])
+      if (!accum.includes(item)) accum.push(item);
+      return accum;
+    }, []);
 }
 
 const getFieldsFromSvg = (str) => {
-  const regexp = new RegExp(patternField('\\w+'), 'gmi')
-  return unicFields(str.match(regexp))
-}
+  const regexp = new RegExp(patternField("\\w+"), "gmi");
+  return unicFields(str.match(regexp));
+};
 
 export default function LoadSvgFiles({ handleFilesLoaded }) {
-  const [state, setState] = useState({ svg: [null, null], fields: {} })
+  const [state, setState] = useState({ svg: [null, null], fields: {} });
 
-  const v1 = useRef()
-  const v2 = useRef()
+  const v1 = useRef();
+  const v2 = useRef();
 
   const handleFileChange = (event) => {
-    const { target } = event
-    const { svg, fields } = state
+    const { target } = event;
+    const { svg, fields } = state;
 
     if (target.files) {
-      let reader = new FileReader()
-      reader.readAsText(target.files[0])
+      let reader = new FileReader();
+      reader.readAsText(target.files[0]);
 
       reader.onload = function () {
-        const svgArr = [...svg]
-        svgArr[target.id.at(-1)] = reader.result
+        const svgArr = [...svg];
+        svgArr[target.id.at(-1)] = reader.result;
 
-        const fieldsArr = getFieldsFromSvg(reader.result)
+        const fieldsArr = getFieldsFromSvg(reader.result);
         // fieldsArr.filter((field) => {
         //   const str = field.replace('__FIELD_', '').replace('__', '')
         //   return Object.hasOwn(fields, str)
         // })
 
         if (fieldsArr) {
-          const fieldsTmp = getFields(fieldsArr)
+          const fieldsTmp = getFields(fieldsArr);
           if (fieldsTmp) {
-            setState({ svg: svgArr, fields: fieldsTmp })
+            setState({ svg: svgArr, fields: fieldsTmp });
           } else {
-            alert('Ошибка. Поля не совпадают с заданными полями.')
-            target.value = ''
+            alert("Ошибка. Поля не совпадают с заданными полями.");
+            target.value = "";
           }
         } else {
-          alert('Ошибка. Поля для редактирования не найдены.')
-          target.value = ''
+          alert("Ошибка. Поля для редактирования не найдены.");
+          target.value = "";
         }
-      }
+      };
 
       reader.onerror = function () {
-        console.log(reader.error)
-        alert('Ошибка. Файл загружен с ошибкой.')
-        target.value = ''
-      }
+        console.log(reader.error);
+        alert("Ошибка. Файл загружен с ошибкой.");
+        target.value = "";
+      };
     }
-  }
+  };
   function getFields(fieldsArr) {
     const filterMock = mockFields.filter((item) => {
-      return fieldsArr.includes(patternField(item.tag))
-    })
+      return fieldsArr.includes(patternField(item.tag));
+    });
 
-    const result = { ...state.fields }
+    const result = { ...state.fields };
     filterMock.forEach((item) => {
-      result[item.tag] = item.mock
-    })
+      result[item.tag] = item.mock;
+    });
 
-    return result
+    return result;
   }
 
   const editHandle = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     if (state.svg[0]) {
-      handleFilesLoaded(state)
+      handleFilesLoaded(state);
     }
-  }
+  };
 
   const changeHandle = (event) => {
-    event.preventDefault()
-    const newSvg = [state.svg[1], state.svg[0]]
-    const tmp = v1.value
-    v1.value = v2.value
-    v2.value = tmp
-    setState({ ...state, svg: newSvg })
-  }
+    event.preventDefault();
+    const newSvg = [state.svg[1], state.svg[0]];
+    const tmp = v1.value;
+    v1.value = v2.value;
+    v2.value = tmp;
+    setState({ ...state, svg: newSvg });
+  };
 
   return (
     <>
@@ -146,5 +146,5 @@ export default function LoadSvgFiles({ handleFilesLoaded }) {
         </form>
       </div>
     </>
-  )
+  );
 }

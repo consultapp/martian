@@ -1,4 +1,4 @@
-import { SIDE } from "@/const";
+import { SIDE } from "@/constants/fixtures";
 import { DownloadButton } from "../DownloadButton/DownloadButton";
 import Fields from "../Fields/Fields";
 

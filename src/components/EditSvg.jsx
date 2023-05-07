@@ -3,7 +3,7 @@ import axios from "axios";
 import RenderSvg from "./RenderSvg";
 import renderFieldsToSvg from "@/utils/renderFieldsToSvg";
 import Form from "./Form.jsx/Form";
-import { API_URL_PDF, SIDE } from "@/const";
+import { API_URL_PDF, SIDE } from "@/constants/fixtures";
 
 const initialDownload = ["", ""];
 
