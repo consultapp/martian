@@ -1,7 +1,8 @@
 import patternField from "@/utils/patternField";
 import React, { useRef, useState } from "react";
 import RenderSvg from "./RenderSvg";
-import { mockFields } from "@/constants/mockFields";
+import { useSelector } from "react-redux";
+import { selectFieldIEntities } from "@/store/entities/fields/selectors";
 
 function unicFields(arr) {
   if (arr)
@@ -18,6 +19,8 @@ const getFieldsFromSvg = (str) => {
 
 export default function LoadSvgFiles({ handleFilesLoaded }) {
   const [state, setState] = useState({ svg: [null, null], fields: {} });
+
+  const fieldEntities = useSelector(selectFieldIEntities);
 
   const v1 = useRef();
   const v2 = useRef();
@@ -62,7 +65,7 @@ export default function LoadSvgFiles({ handleFilesLoaded }) {
     }
   };
   function getFields(fieldsArr) {
-    const filterMock = mockFields.filter((item) => {
+    const filterMock = fieldEntities.filter((item) => {
       return fieldsArr.includes(patternField(item.tag));
     });
 
