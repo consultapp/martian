@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   svg: new Array(2),
-  fields: [],
+  fields: {},
   loadingState: [LOADING_STATUS.idle, LOADING_STATUS.idle],
   goToEditVcard: false,
 };
@@ -16,28 +16,27 @@ export const vcardSlice = createSlice({
       state.loadingState[payload] = LOADING_STATUS.pending;
     },
     finishLoading: (state, { payload }) => {
-      const { svg, index } = payload;
+      const { svg, fields, index } = payload;
 
       state.svg[index] = svg;
-      // state.fields= ???
+      Object.entries(fields).forEach(([key, value]) => {
+        if (!state.fields[key]) state.fields[key] = value;
+      });
       state.loadingState[index] = LOADING_STATUS.fulfilled;
     },
     failLoading: (state) => {
       state.isLoading = LOADING_STATUS.failed;
     },
     goToVcardEdit: (state) => {
-      if (state.loadingState[0] === fulfilled) state.goToEditVcard = true;
+      if (state.loadingState[0] === LOADING_STATUS.fulfilled)
+        state.goToEditVcard = true;
     },
     clearVcards: (state) => {
       state = initialState;
     },
     switchVcards: (state) => {
-      const tmpSvg = state.svg[0];
-      const tmpFields = state.fields[0];
-      state.svg[0] = state.svg[1];
-      state.fields[0] = state.fields[1];
-      state.svg[1] = tmpSvg;
-      state.fields[1] = tmpFields;
+      state.svg.reverse();
+      state.loadingState.reverse();
     },
   },
 });

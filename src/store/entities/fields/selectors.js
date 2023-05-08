@@ -3,7 +3,7 @@ import { LOADING_STATUS } from "@/constants/fixtures";
 export const selectFieldModul = (state) => state.field;
 
 export const selectFieldIds = (state) => selectFieldModul(state).ids;
-export const selectFieldIEntities = (state) =>
+export const selectFields = (state) =>
   Object.values(selectFieldModul(state)?.entities);
 
 export const selectFieldLoadingStatus = (state) =>

@@ -6,6 +6,7 @@ export default function LoadSvg({
   changeHandle,
   handleFileChange,
 }) {
+  console.log("LoadSvg");
   return (
     <>
       <div className="row">

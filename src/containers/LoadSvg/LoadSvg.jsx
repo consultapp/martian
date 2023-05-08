@@ -4,9 +4,8 @@ import { setVcard } from "@/store/entities/vcard/thunk/setVcard";
 import LoadSvg from "@/components/LoadSvg/LoadSvg";
 import { vcardSlice } from "@/store/entities/vcard";
 
-export default function LoadSvgContainer({ handleFilesLoaded }) {
+export default function LoadSvgContainer() {
   const dispatch = useDispatch();
-  const fieldEntities = useSelector(selectFieldIEntities);
 
   const handleFileChange = (event) => {
     const { target } = event;
@@ -22,7 +21,6 @@ export default function LoadSvgContainer({ handleFilesLoaded }) {
         setVcard({
           file: target.files[0],
           index: target.id.at(-1),
-          fieldEntities,
         })
       );
     }

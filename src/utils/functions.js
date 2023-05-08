@@ -20,19 +20,6 @@ export const getFieldsFromSvg = (str) => {
   return unicFields(str.match(regexp));
 };
 
-export const getFields = (fieldsArr) => {
-  const filterMock = fieldEntities.filter((item) => {
-    return fieldsArr.includes(patternField(item.tag));
-  });
-
-  const result = { ...state.fields };
-  filterMock.forEach((item) => {
-    result[item.tag] = item.mock;
-  });
-
-  return result;
-};
-
 export const renderFieldsToSvg = (svg, fields) => {
   let result = svg;
   if (svg && fields) {

@@ -3,12 +3,13 @@ import EditSvg from "../EditSvg";
 import LoadSvgFiles from "../LoadSvg/LoadSvg";
 import { useSelector } from "react-redux";
 import { selectIsFirstVcardLoaded } from "@/store/entities/vcard/selectors";
+import LoadSvgContainer from "@/containers/LoadSvg/LoadSvg";
 
 function Martian() {
   const isFirstVcardLoaded = useSelector(selectIsFirstVcardLoaded);
   return (
     <div className="container-sm main">
-      {!isFirstVcardLoaded ? <LoadSvgFiles /> : <EditSvg />}
+      {!isFirstVcardLoaded ? <LoadSvgContainer /> : <EditSvg />}
       <div className="row">
         <p>
           <a href="/static/v2_front.svg" download="v2_front.svg">
