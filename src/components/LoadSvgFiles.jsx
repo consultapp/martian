@@ -1,8 +1,9 @@
 import patternField from "@/utils/patternField";
 import React, { useRef, useState } from "react";
-import RenderSvg from "./RenderSvg";
+import RenderSvg from "./Svg/Svg";
 import { useSelector } from "react-redux";
 import { selectFieldIEntities } from "@/store/entities/fields/selectors";
+import SvgContainer from "@/containers/Svg/Svg";
 
 function unicFields(arr) {
   if (arr)
@@ -30,6 +31,17 @@ export default function LoadSvgFiles({ handleFilesLoaded }) {
     const { svg, fields } = state;
 
     if (target.files) {
+      // function onChange(event) {
+      //   var file = event.target.files[0];
+      //   var reader = new FileReader();
+      //   reader.onload = function(event) {
+      //     // The file's text will be printed here
+      //     SET STATE HERE FOR URL!!!!
+
+      //   };
+
+      //   reader.readAsDataURL(file);
+      // }
       let reader = new FileReader();
       reader.readAsText(target.files[0]);
 
@@ -114,7 +126,7 @@ export default function LoadSvgFiles({ handleFilesLoaded }) {
                 onChange={handleFileChange}
               />
               <div className="load-files-render">
-                <RenderSvg svg={state.svg[0]} fields={state.fields} />
+                <SvgContainer svg={state.svg[0]} fields={state.fields} />
               </div>
             </div>
             <div className="col mb-3">
@@ -130,7 +142,7 @@ export default function LoadSvgFiles({ handleFilesLoaded }) {
                 onChange={handleFileChange}
               />
               <div className="load-files-render">
-                <RenderSvg svg={state.svg[1]} fields={state.fields} />
+                <SvgContainer svg={state.svg[1]} fields={state.fields} />
               </div>
             </div>
           </div>

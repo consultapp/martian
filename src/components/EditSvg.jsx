@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import RenderSvg from "./RenderSvg";
+import RenderSvg from "./Svg/Svg";
 import renderFieldsToSvg from "@/utils/renderFieldsToSvg";
 import Form from "./Form.jsx/Form";
 import { API_URL_PDF, SIDE } from "@/constants/fixtures";
+import SvgContainer from "@/containers/Svg/Svg";
 
 const initialDownload = ["", ""];
 
@@ -48,7 +49,6 @@ const EditSvg = ({ svg, startFields, handleRefresh }) => {
     makePdfFile();
   }
 
-  console.log(download);
   return (
     <>
       <div className="row">
@@ -57,11 +57,11 @@ const EditSvg = ({ svg, startFields, handleRefresh }) => {
       <div className="row">
         {svg.map((item, i) => {
           return item ? (
-            <div className="col" key={i}>
-              <RenderSvg svg={item} fields={fields} alt={`Svg${i}`} />
+            <div className="col" key={`Svg${i}`}>
+              <SvgContainer svg={item} fields={fields} alt={`Svg${i}`} />
             </div>
           ) : (
-            <div className="col" key={i}>
+            <div className="col" key={`Svg${i}`}>
               Нет второго шаблона
             </div>
           );
