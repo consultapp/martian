@@ -1,25 +1,14 @@
-import patternField from "@/utils/patternField";
+import patternField from "@/utils/functions";
 import React, { useRef, useState } from "react";
-import RenderSvg from "./Svg/Svg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectFieldIEntities } from "@/store/entities/fields/selectors";
 import SvgContainer from "@/containers/Svg/Svg";
-
-function unicFields(arr) {
-  if (arr)
-    return arr.reduce((accum, item) => {
-      if (!accum.includes(item)) accum.push(item);
-      return accum;
-    }, []);
-}
-
-const getFieldsFromSvg = (str) => {
-  const regexp = new RegExp(patternField("\\w+"), "gmi");
-  return unicFields(str.match(regexp));
-};
+import { setVcard } from "@/store/entities/vcard/thunk/setVcard";
 
 export default function LoadSvgFiles({ handleFilesLoaded }) {
   const [state, setState] = useState({ svg: [null, null], fields: {} });
+
+  const dispatch = useDispatch();
 
   const fieldEntities = useSelector(selectFieldIEntities);
 
@@ -28,7 +17,6 @@ export default function LoadSvgFiles({ handleFilesLoaded }) {
 
   const handleFileChange = (event) => {
     const { target } = event;
-    const { svg, fields } = state;
 
     if (target.files) {
       // function onChange(event) {
@@ -42,38 +30,14 @@ export default function LoadSvgFiles({ handleFilesLoaded }) {
 
       //   reader.readAsDataURL(file);
       // }
-      let reader = new FileReader();
-      reader.readAsText(target.files[0]);
 
-      reader.onload = function () {
-        const svgArr = [...svg];
-        svgArr[target.id.at(-1)] = reader.result;
-
-        const fieldsArr = getFieldsFromSvg(reader.result);
-        // fieldsArr.filter((field) => {
-        //   const str = field.replace('__FIELD_', '').replace('__', '')
-        //   return Object.hasOwn(fields, str)
-        // })
-
-        if (fieldsArr) {
-          const fieldsTmp = getFields(fieldsArr);
-          if (fieldsTmp) {
-            setState({ svg: svgArr, fields: fieldsTmp });
-          } else {
-            alert("Ошибка. Поля не совпадают с заданными полями.");
-            target.value = "";
-          }
-        } else {
-          alert("Ошибка. Поля для редактирования не найдены.");
-          target.value = "";
-        }
-      };
-
-      reader.onerror = function () {
-        console.log(reader.error);
-        alert("Ошибка. Файл загружен с ошибкой.");
-        target.value = "";
-      };
+      dispatch(
+        setVcard({
+          file: target.files[0],
+          index: target.id.at(-1),
+          fieldEntities,
+        })
+      );
     }
   };
   function getFields(fieldsArr) {

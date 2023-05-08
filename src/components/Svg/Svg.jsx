@@ -1,12 +1,12 @@
-export default function SvgComponent({ svg }) {
+export default function SvgComponent({ svg, alt }) {
   return (
     <div className="svg_render">
-      {render ? (
+      {svg ? (
         <img
           src={svg}
           width="100%"
           // height="150"
-          alt={alt}
+          alt={alt || ""}
         />
       ) : (
         <div className="placeholder place-hold">placeholder</div>
