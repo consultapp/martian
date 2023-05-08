@@ -30,19 +30,15 @@ export const setVcard =
         //   return Object.hasOwn(fields, str)
         // })
 
-        console.log("fieldsFromSvg", fieldsFromSvg);
-
         if (fieldsFromSvg) {
           const filterMock = fieldsMock.filter((item) => {
             return fieldsFromSvg.includes(patternField(item.tag));
           });
-          console.log("filterMock", filterMock);
 
           const fields = {};
           filterMock.forEach((item) => {
             fields[item.tag] = item.mock;
           });
-          console.log("fieldsTmp", fields);
           if (fields) {
             dispatch(vcardSlice.actions.finishLoading({ svg, fields, index }));
           } else {

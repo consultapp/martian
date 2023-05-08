@@ -1,5 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
-import { selectFieldIEntities } from "@/store/entities/fields/selectors";
+import { useDispatch } from "react-redux";
 import { setVcard } from "@/store/entities/vcard/thunk/setVcard";
 import LoadSvg from "@/components/LoadSvg/LoadSvg";
 import { vcardSlice } from "@/store/entities/vcard";
@@ -28,7 +27,7 @@ export default function LoadSvgContainer() {
 
   const editHandle = (event) => {
     event.preventDefault();
-    dispatch(vcardSlice.actions.goToVcardEdit());
+    dispatch(vcardSlice.actions.enableEditMode());
   };
 
   const changeHandle = (event) => {
