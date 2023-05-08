@@ -6,7 +6,6 @@ export default function LoadSvg({
   changeHandle,
   handleFileChange,
 }) {
-  console.log("LoadSvg");
   return (
     <>
       <div className="row">
@@ -42,7 +41,7 @@ export default function LoadSvg({
                 onChange={handleFileChange}
               />
               <div className="load-files-render">
-                <SvgContainer index={2} />
+                <SvgContainer index={1} />
               </div>
             </div>
           </div>

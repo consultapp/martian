@@ -1,11 +1,11 @@
 import React from "react";
-import EditSvg from "../EditSvg";
 import LoadSvgContainer from "@/containers/LoadSvg/LoadSvg";
+import EditSvgContainer from "@/containers/EditSvg/EditSvg";
 
 function Martian({ editMode }) {
   return (
     <div className="container-sm main">
-      {!editMode ? <LoadSvgContainer /> : <EditSvg />}
+      {!editMode ? <LoadSvgContainer /> : <EditSvgContainer />}
       <div className="row">
         <p>
           <a href="/static/v2_front.svg" download="v2_front.svg">

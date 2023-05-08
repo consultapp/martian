@@ -8,7 +8,6 @@ export default function LoadSvgContainer() {
 
   const handleFileChange = (event) => {
     const { target } = event;
-    console.log("setVcard", setVcard);
 
     if (target.files) {
       // function onChange(event) {
