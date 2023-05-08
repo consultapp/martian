@@ -1,19 +1,14 @@
 import React from "react";
 import EditSvg from "../EditSvg";
-import LoadSvgFiles from "../LoadSvgFiles";
+import LoadSvgFiles from "../LoadSvg/LoadSvg";
+import { useSelector } from "react-redux";
+import { selectIsFirstVcardLoaded } from "@/store/entities/vcard/selectors";
 
-function Martian({ state, handleFilesLoaded, handleRefresh }) {
+function Martian() {
+  const isFirstVcardLoaded = useSelector(selectIsFirstVcardLoaded);
   return (
     <div className="container-sm main">
-      {!state?.svg[0] ? (
-        <LoadSvgFiles handleFilesLoaded={handleFilesLoaded} />
-      ) : (
-        <EditSvg
-          svg={state.svg}
-          startFields={state.fields}
-          handleRefresh={handleRefresh}
-        />
-      )}
+      {!isFirstVcardLoaded ? <LoadSvgFiles /> : <EditSvg />}
       <div className="row">
         <p>
           <a href="/static/v2_front.svg" download="v2_front.svg">

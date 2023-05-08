@@ -1,6 +1,6 @@
 /*
 
-
+Functions / Utils
 
 */
 export const patternField = (tag) => {
@@ -30,5 +30,15 @@ export const getFields = (fieldsArr) => {
     result[item.tag] = item.mock;
   });
 
+  return result;
+};
+
+export const renderFieldsToSvg = (svg, fields) => {
+  let result = svg;
+  if (svg && fields) {
+    result = Object.entries(fields).reduce((accum, [key, value]) => {
+      return accum.replace(patternField(key.toUpperCase()), value);
+    }, svg);
+  }
   return result;
 };

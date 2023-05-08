@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import RenderSvg from "./Svg/Svg";
-import renderFieldsToSvg from "@/utils/renderFieldsToSvg";
 import Form from "./Form.jsx/Form";
 import { API_URL_PDF, SIDE } from "@/constants/fixtures";
 import SvgContainer from "@/containers/Svg/Svg";
+import { renderFieldsToSvg } from "@/utils/functions";
 
 const initialDownload = ["", ""];
 

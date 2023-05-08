@@ -5,6 +5,7 @@ const initialState = {
   svg: new Array(2),
   fields: [],
   loadingState: [LOADING_STATUS.idle, LOADING_STATUS.idle],
+  goToEditVcard: false,
 };
 
 export const vcardSlice = createSlice({
@@ -23,6 +24,20 @@ export const vcardSlice = createSlice({
     },
     failLoading: (state) => {
       state.isLoading = LOADING_STATUS.failed;
+    },
+    goToVcardEdit: (state) => {
+      if (state.loadingState[0] === fulfilled) state.goToEditVcard = true;
+    },
+    clearVcards: (state) => {
+      state = initialState;
+    },
+    switchVcards: (state) => {
+      const tmpSvg = state.svg[0];
+      const tmpFields = state.fields[0];
+      state.svg[0] = state.svg[1];
+      state.fields[0] = state.fields[1];
+      state.svg[1] = tmpSvg;
+      state.fields[1] = tmpFields;
     },
   },
 });
