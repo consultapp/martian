@@ -12,3 +12,6 @@ export const selectPdfLoadingStatus = (state) =>
 
 export const selectIsPdfLoading = (state) =>
   selectPdfLoadingStatus(state) === LOADING_STATUS.pending;
+
+export const selectIsPdfFailed = (state) =>
+  selectPdfLoadingStatus(state) === LOADING_STATUS.failed;

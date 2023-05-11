@@ -9,7 +9,7 @@ export const fetchPdf = createAsyncThunk(
   async (clearState = false, { getState, rejectWithValue }) => {
     const state = getState();
 
-    if (clearState) rejectWithValue({ loadingStatus: LOADING_STATUS.idle });
+    if (clearState) return rejectWithValue([]);
 
     const svg = selectVcardSvgs(state);
     const fields = selectVcardFields(state);
@@ -36,11 +36,11 @@ export const fetchPdf = createAsyncThunk(
       const result = await Promise.all(promises);
       return result.map((item) => {
         if (item.status !== 200)
-          rejectWithValue(`pfd/fetchPdf: ${item.status}`);
+          return rejectWithValue(`pfd/fetchPdf: ${item.status}`);
         return item?.data?.resultName;
       });
     } catch (event) {
-      rejectWithValue(`pfd/fetchPdf: ${event.message}`);
+      return rejectWithValue(`pfd/fetchPdf: ${event.message}`);
     }
   }
 );
