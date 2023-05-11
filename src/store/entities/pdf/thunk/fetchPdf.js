@@ -1,13 +1,16 @@
 import { renderFieldsToSvg } from "@/utils/functions";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { selectVcardFields, selectVcardSvgs } from "../../vcard/selectors";
-import { API_URL_PDF, SIDE } from "@/constants/fixtures";
+import { API_URL_PDF, LOADING_STATUS, SIDE } from "@/constants/fixtures";
 import axios from "axios";
 
 export const fetchPdf = createAsyncThunk(
   "pfd/fetchPdf",
-  async (_, { getState, rejectWithValue }) => {
+  async (clearState = false, { getState, rejectWithValue }) => {
     const state = getState();
+
+    if (clearState) rejectWithValue({ loadingStatus: LOADING_STATUS.idle });
+
     const svg = selectVcardSvgs(state);
     const fields = selectVcardFields(state);
 

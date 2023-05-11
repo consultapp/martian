@@ -1,5 +1,5 @@
 import Form from "@/components/Form.jsx/Form";
-import { pdfSlice } from "@/store/entities/pdf";
+import { fetchPdf } from "@/store/entities/pdf/thunk/fetchPdf";
 import { vcardSlice } from "@/store/entities/vcard";
 import { useDispatch } from "react-redux";
 
@@ -9,7 +9,7 @@ export default function FormContainer() {
   const handleRefresh = (event) => {
     event.preventDefault();
     dispatch(vcardSlice.actions.clearVcards());
-    // dispatch(pdfSlice.actions.clearPdf());
+    dispatch(fetchPdf(true));
   };
 
   return <Form handleRefresh={handleRefresh} />;
