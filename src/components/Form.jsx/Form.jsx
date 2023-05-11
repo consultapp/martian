@@ -1,48 +1,21 @@
-import { SIDE } from "@/const";
-import { DownloadButton } from "../DownloadButton/DownloadButton";
-import Fields from "../Fields/Fields";
+import FieldsContainer from "@/containers/Fields/Fields";
+import { DownloadButton } from "../PdfFunctionButtons/PdfFunctionButtons";
+import { PdfFunctionButtonsContainer } from "@/containers/PdfFunctionButtons/PdfFunctionButtons";
 
-export default function Form({
-  fields,
-  setFields,
-  handleMakePdf,
-  download,
-  isLoading,
-  handleRefresh,
-}) {
-  function updateFields({ target }) {
-    const tmpFields = { ...fields };
-    tmpFields[target.name] = target.value;
-    setFields(tmpFields);
-  }
-
+export default function Form({ handleRefresh }) {
   return (
     <form>
-      <Fields fields={fields} updateFields={updateFields} />
+      <FieldsContainer />
       <div className="row">
         <div className="edit-form-buttons">
           <button
             className="btn btn-secondary outline m-2"
-            onClick={(event) => {
-              event.preventDefault();
-              handleRefresh();
-            }}
+            onClick={handleRefresh}
           >
             &lt; Выбрать шаблоны
           </button>
-          <button className="btn btn-primary m-2" onClick={handleMakePdf}>
-            Make PDF
-          </button>
 
-          {download.map(
-            (item, i) =>
-              item && <DownloadButton resultName={item} side={SIDE[i]} />
-          )}
-          {isLoading && (
-            <div className="spinner-border text-primary m-2" role="status">
-              &nbsp;
-            </div>
-          )}
+          <PdfFunctionButtonsContainer />
         </div>
       </div>
     </form>

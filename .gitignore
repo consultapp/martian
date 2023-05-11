@@ -36,4 +36,4 @@ package-lock.json
 #static
 public/static/pdf
 public/pdf
-pdf
+package-lock.json

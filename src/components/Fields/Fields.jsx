@@ -14,8 +14,8 @@ export default function Fields({ fields, updateFields }) {
                 onChange={updateFields}
               />
             </div>
-          )
+          );
         })}
     </div>
-  )
+  );
 }
