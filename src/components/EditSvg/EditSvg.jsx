@@ -16,7 +16,7 @@ const EditSvg = ({ svg, fields }) => {
           <SvgContainer index={1} />
         </div>
       </div>
-      {/* <Form /> */}
+      <Form />
     </>
   );
 };

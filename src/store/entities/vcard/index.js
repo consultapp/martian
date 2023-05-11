@@ -38,5 +38,9 @@ export const vcardSlice = createSlice({
       state.svg.reverse();
       state.loadingStatus.reverse();
     },
+    updateFields: (state, { payload }) => {
+      console.log("payload", payload);
+      state.fields[payload.name] = payload.value;
+    },
   },
 });
