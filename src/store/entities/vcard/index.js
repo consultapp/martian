@@ -31,15 +31,14 @@ export const vcardSlice = createSlice({
       if (state.loadingStatus[0] === LOADING_STATUS.fulfilled)
         state.editMode = true;
     },
-    clearVcards: (state) => {
-      state = initialState;
+    clearVcards: (_) => {
+      return initialState;
     },
     switchVcards: (state) => {
       state.svg.reverse();
       state.loadingStatus.reverse();
     },
     updateFields: (state, { payload }) => {
-      console.log("payload", payload);
       state.fields[payload.name] = payload.value;
     },
   },

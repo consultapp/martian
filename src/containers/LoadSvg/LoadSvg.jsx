@@ -10,11 +10,6 @@ export default function LoadSvgContainer() {
     const { target } = event;
 
     if (target.files) {
-      // function onChange(event) {
-      //   var file = event.target.files[0];
-      //   var reader = new FileReader();
-      //   reader.readAsDataURL(file);
-
       dispatch(
         setVcard({
           file: target.files[0],

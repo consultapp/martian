@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Form from "../Form.jsx/Form";
 import SvgContainer from "@/containers/Svg/Svg";
+import FormContainer from "@/containers/Form.js/Form";
 
-const EditSvg = ({ svg, fields }) => {
+const EditSvg = () => {
   return (
     <>
       <div className="row">
@@ -16,7 +16,7 @@ const EditSvg = ({ svg, fields }) => {
           <SvgContainer index={1} />
         </div>
       </div>
-      <Form />
+      <FormContainer />
     </>
   );
 };

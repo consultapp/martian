@@ -9,7 +9,6 @@ function MartianContainer() {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsFieldLoading);
   const editMode = useSelector(selectVcardEditMode);
-  console.log("editMode", editMode);
 
   useEffect(() => {
     dispatch(fetchFields());

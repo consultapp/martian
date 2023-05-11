@@ -9,11 +9,8 @@ import { vcardSlice } from "..";
 import { selectFields } from "../../fields/selectors";
 
 export const setVcard =
-  ({ file, index, fieldEntities }) =>
+  ({ file, index }) =>
   (dispatch, getState) => {
-    // const isUserLoaded = selectIsUserAlreadyLoaded(getState());
-    // if (isUserLoaded) return;
-
     if (file) {
       const fieldsMock = selectFields(getState());
       dispatch(vcardSlice.actions.startLoading(index));
@@ -25,10 +22,6 @@ export const setVcard =
         const svg = reader.result;
 
         const fieldsFromSvg = getFieldsFromSvg(svg);
-        // fieldsArr.filter((field) => {
-        //   const str = field.replace('__FIELD_', '').replace('__', '')
-        //   return Object.hasOwn(fields, str)
-        // })
 
         if (fieldsFromSvg) {
           const filterMock = fieldsMock.filter((item) => {
