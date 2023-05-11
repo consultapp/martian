@@ -13,7 +13,7 @@ export const PdfFunctionButtons = ({ links, isLoading, handleMakePdf }) => {
   return (
     <>
       <button className="btn btn-primary m-2" onClick={handleMakePdf}>
-        {links && !isLoading ? "Update" : "Make"} PDF
+        {links?.at(0) ? "Update" : "Make"} PDF
       </button>
 
       {links.map(
