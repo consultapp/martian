@@ -9,11 +9,11 @@ export const selectVcardSvgs = (state) => selectVcardModul(state).svg;
 
 export const selectVcardFields = (state) => selectVcardModul(state).fields;
 
-export const selectFieldLoadingStatus = (state) =>
+export const selectVcardLoadingStatus = (state) =>
   selectVcardModul(state).loadingStatus || [];
 
 export const selectIsFirstVcardLoaded = (state) =>
-  selectFieldLoadingStatus(state)[0] === LOADING_STATUS.fulfilled;
+  selectVcardLoadingStatus(state)[0] === LOADING_STATUS.fulfilled;
 
 export const selectVcardEditMode = (state) =>
   selectIsFirstVcardLoaded(state) && selectVcardModul(state)?.editMode;
