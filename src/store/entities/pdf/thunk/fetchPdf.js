@@ -1,7 +1,7 @@
 import { renderFieldsToSvg } from "@/utils/functions";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { selectVcardFields, selectVcardSvgs } from "../../vcard/selectors";
-import { API_URL_PDF, LOADING_STATUS, SIDE } from "@/constants/fixtures";
+import { API_URL_PDF, SIDE } from "@/constants/fixtures";
 import axios from "axios";
 
 export const fetchPdf = createAsyncThunk(
