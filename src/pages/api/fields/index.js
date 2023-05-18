@@ -2,6 +2,6 @@
 
 import { mockFields } from "@/constants/mockFields";
 
-export default function handler(req, res) {
+export default function handler(_, res) {
   res.status(200).json(mockFields);
 }

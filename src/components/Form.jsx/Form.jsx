@@ -1,5 +1,4 @@
 import FieldsContainer from "@/containers/Fields/Fields";
-import { DownloadButton } from "../PdfFunctionButtons/PdfFunctionButtons";
 import { PdfFunctionButtonsContainer } from "@/containers/PdfFunctionButtons/PdfFunctionButtons";
 
 export default function Form({ handleRefresh }) {

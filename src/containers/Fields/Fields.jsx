@@ -1,5 +1,4 @@
 import Fields from "@/components/Fields/Fields";
-import { selectFieldIds } from "@/store/entities/fields/selectors";
 import { vcardSlice } from "@/store/entities/vcard";
 import { selectVcardFields } from "@/store/entities/vcard/selectors";
 import { useDispatch, useSelector } from "react-redux";

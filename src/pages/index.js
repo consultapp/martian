@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Martian from "@/components/Martian/Martian";
 import MartianContainer from "@/containers/Martian/Martian";
 
 export default function Home() {

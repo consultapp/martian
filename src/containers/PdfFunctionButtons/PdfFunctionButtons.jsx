@@ -5,6 +5,7 @@ import {
   selectPdfLinks,
 } from "@/store/entities/pdf/selectors";
 import { fetchPdf } from "@/store/entities/pdf/thunk/fetchPdf";
+import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export const PdfFunctionButtonsContainer = () => {
@@ -14,10 +15,14 @@ export const PdfFunctionButtonsContainer = () => {
   const links = useSelector(selectPdfLinks);
   const dispatch = useDispatch();
 
-  function handleMakePdf(event) {
-    event.preventDefault();
-    dispatch(fetchPdf());
-  }
+  const handleMakePdf = useCallback(
+    (event) => {
+      event.preventDefault();
+      dispatch(fetchPdf());
+    },
+    [dispatch]
+  );
+
   return (
     <PdfFunctionButtons
       handleMakePdf={handleMakePdf}

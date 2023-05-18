@@ -25,11 +25,7 @@ export default function SvgContainer({ index }) {
   }, [svg, fields]);
 
   if (!svg) {
-    return (
-      <div className="col" key="Svg1">
-        Нет загруженного шаблона
-      </div>
-    );
+    return <div className="col">Нет загруженного шаблона</div>;
   }
 
   return <SvgComponent svg={render} />;
