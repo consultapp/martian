@@ -14,7 +14,6 @@ export const fetchPdf = createAsyncThunk(
     const svg = selectVcardSvgs(state);
     const fields = selectVcardFields(state);
 
-    console.log("fetchPdf Start", svg);
     try {
       const promises = [];
 

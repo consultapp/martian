@@ -1,9 +1,3 @@
-/*
-
-setVcard
-
-*/
-
 import { getFieldsFromSvg, patternField } from "@/utils/functions";
 import { vcardSlice } from "..";
 import { selectFields } from "../../fields/selectors";

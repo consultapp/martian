@@ -1,8 +1,3 @@
-/*
-
-Functions / Utils
-
-*/
 export const patternField = (tag) => {
   return `__FIELD_${tag}__`;
 };
