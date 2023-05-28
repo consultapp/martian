@@ -5,6 +5,8 @@ export default function LoadSvg({
   editHandle,
   changeHandle,
   handleFileChange,
+  showChangeButton,
+  acivateEditButton,
 }) {
   return (
     <>
@@ -48,12 +50,22 @@ export default function LoadSvg({
           <div className="row">
             {true && (
               <div className="load-form-buttons">
-                <button className="btn btn-primary m-3" onClick={editHandle}>
+                <button
+                  className={`btn btn-primary m-3 ${
+                    acivateEditButton ? "" : "disabled"
+                  }`}
+                  onClick={editHandle}
+                >
                   Редактировать визитки
                 </button>
-                <button className="btn btn-primary m-3" onClick={changeHandle}>
-                  Поменять местами
-                </button>
+                {showChangeButton && (
+                  <button
+                    className="btn btn-primary m-3"
+                    onClick={changeHandle}
+                  >
+                    Поменять местами
+                  </button>
+                )}
               </div>
             )}
           </div>

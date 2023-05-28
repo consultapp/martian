@@ -28,8 +28,14 @@ export const vcardSlice = createSlice({
       state.isLoading = LOADING_STATUS.failed;
     },
     enableEditMode: (state) => {
-      if (state.loadingStatus[0] === LOADING_STATUS.fulfilled)
+      if (state.loadingStatus[0] === LOADING_STATUS.fulfilled) {
         state.editMode = true;
+      }
+      if (state.loadingStatus[1] === LOADING_STATUS.fulfilled) {
+        state.svg.reverse();
+        state.loadingStatus.reverse();
+        state.editMode = true;
+      }
     },
     clearVcards: (_) => {
       return initialState;
